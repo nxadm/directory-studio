@@ -38,15 +38,23 @@ jobs:
         run: mvn -f pom-first.xml -U clean install  && mvn clean install 
       - name: Package releases
         run: |
+          set -xv
           mkdir ${{ github.workspace }}/packages
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/linux/gtk/x86_64
-          tar cvzf ${{ github.workspace }}/packages/ApacheDirectoryStudio-linux-x86_64.tar.gz ApacheDirectoryStudio
+          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-linux-x86_64.tar.gz
+          tar cvzf $PKGNAME ApacheDirectoryStudio
+          sha512sum $PKGNAME > $PKGNAME.sha512
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/macosx/cocoa/aarch64
-          tar cvzf ${{ github.workspace }}/packages/ApacheDirectoryStudio-macos-aarch64.tar.gz ApacheDirectoryStudio
+          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-macos-aarch64.tar.gz
+          tar cvzf $PKGNAME ApacheDirectoryStudio
+          sha512sum $PKGNAME > $PKGNAME.sha512
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/macosx/cocoa/x86_64
-          tar cvzf ${{ github.workspace }}/packages/ApacheDirectoryStudio-macos-x86_64.tar.gz ApacheDirectoryStudio
+          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-macos-x86_64.tar.gz
+          tar cvzf $PKGNAME ApacheDirectoryStudio
+          sha512sum $PKGNAME > $PKGNAME.sha512
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/win32/win32/x86_64
-          tar cvzf ${{ github.workspace }}/packages/ApacheDirectoryStudio-windows-x86_64.tar.gz ApacheDirectoryStudio
+          tar cvzf $PKGNAME ApacheDirectoryStudio
+          sha512sum $PKGNAME > $PKGNAME.sha512
       - name: Archive packages
         uses: actions/upload-artifact@v4
         with:
@@ -68,7 +76,7 @@ jobs:
       - name: Upload to Github Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "packages/*.tar.gz"
+          artifacts: "packages/*.tar.gz*"
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: true
           body: "Apache Directory Studio Releases for Linux, MacOS and Windows. Enhancements: support for MacOS ARM + fix TLS 1.3 bug"
