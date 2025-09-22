@@ -37,30 +37,32 @@ jobs:
       - name: Build with Apache Maven
         run: mvn -f pom-first.xml -U clean install  && mvn clean install 
       - name: Package releases
+        if: startsWith(github.ref, 'refs/tags/M')
         run: |
           set -xv
           mkdir ${{ github.workspace }}/packages
-          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-linux-x86_64.tar.gz
+          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-$GITHUB_REF_NAME-linux-x86_64.tar.gz
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/linux/gtk/x86_64
           ls -la
           tar cvzf $PKGNAME ApacheDirectoryStudio
           sha512sum $PKGNAME > $PKGNAME.sha512
-          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-macos-aarch64.app.tar.gz
+          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-$GITHUB_REF_NAME-macos-aarch64.app.tar.gz
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/macosx/cocoa/aarch64
           ls -la
           tar cvzf $PKGNAME ApacheDirectoryStudio.app
           sha512sum $PKGNAME > $PKGNAME.sha512
-          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-macos-x86_64.app.tar.gz
+          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-$GITHUB_REF_NAME-macos-x86_64.app.tar.gz
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/macosx/cocoa/x86_64
           ls -la
           tar cvzf $PKGNAME ApacheDirectoryStudio.app
           sha512sum $PKGNAME > $PKGNAME.sha512
-          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-win32-x86_64.tar.gz
+          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-$GITHUB_REF_NAME-win32-x86_64.tar.gz
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/win32/win32/x86_64
           ls -la
           tar cvzf $PKGNAME ApacheDirectoryStudio
           sha512sum $PKGNAME > $PKGNAME.sha512
       - name: Archive packages
+        if: startsWith(github.ref, 'refs/tags/M')
         uses: actions/upload-artifact@v4
         with:
           name: packages
