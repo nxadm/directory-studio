@@ -16,6 +16,13 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. -->
 
+# Fork: M17 release
+
+This is a fork of Apache Directory Studio 2.0.0-M17, with the following changes:
+- Fixed TLS 1.3 bug by updating dependency (@klasen).
+- Support for MacOS ARM (M1/M2) architecture (M17 only released MacOS Intel binaries).
+
+The new binaries can be found in the [releases section](https://github.com/nxadm/directory-studio/releases).
 
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/directory-studio/badge)](https://api.securityscorecards.dev/projects/github.com/apache/directory-studio)
 
