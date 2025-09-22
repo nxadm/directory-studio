@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: "Build and Test"
+name: "Release"
 
-on:
-  pull_request:
-    branches: ['master']
+#on:
+#  pull_request:
+#    branches: ['master']
 
 permissions:
   contents: read
