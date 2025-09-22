@@ -40,19 +40,24 @@ jobs:
         run: |
           set -xv
           mkdir ${{ github.workspace }}/packages
-          cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/linux/gtk/x86_64
           export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-linux-x86_64.tar.gz
+          cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/linux/gtk/x86_64
+          ls -la
           tar cvzf $PKGNAME ApacheDirectoryStudio
           sha512sum $PKGNAME > $PKGNAME.sha512
-          cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/macosx/cocoa/aarch64
           export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-macos-aarch64.tar.gz
+          cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/macosx/cocoa/aarch64
+          ls -la
           tar cvzf $PKGNAME ApacheDirectoryStudio
           sha512sum $PKGNAME > $PKGNAME.sha512
-          cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/macosx/cocoa/x86_64
           export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-macos-x86_64.tar.gz
+          cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/macosx/cocoa/x86_64
+          ls -la
           tar cvzf $PKGNAME ApacheDirectoryStudio
           sha512sum $PKGNAME > $PKGNAME.sha512
+          export PKGNAME=${{ github.workspace }}/packages/ApacheDirectoryStudio-win32-x86_64.tar.gz
           cd ${{ github.workspace }}/product/target/products/org.apache.directory.studio.product/win32/win32/x86_64
+          ls -la
           tar cvzf $PKGNAME ApacheDirectoryStudio
           sha512sum $PKGNAME > $PKGNAME.sha512
       - name: Archive packages
