@@ -67,7 +67,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: packages
-          pattern: *
       - run: ls -R packages      
       - name: Upload to Github Releases
         uses: ncipollo/release-action@v1
