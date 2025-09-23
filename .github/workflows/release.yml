@@ -16,8 +16,8 @@
 name: "Release"
 on: [push, pull_request]
 
-permissions:
-  contents: read
+#permissions:
+#  contents: read
 
 jobs:
   build:
@@ -82,6 +82,8 @@ jobs:
       - run: ls -R packages      
       - name: Upload to Github Releases
         uses: ncipollo/release-action@v1
+        permissions:
+          contents: write
         with:
           artifacts: "packages/*.tar.gz*"
           token: ${{ secrets.GITHUB_TOKEN }}
